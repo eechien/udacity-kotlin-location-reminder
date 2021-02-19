@@ -1,0 +1,9 @@
+*.iml
+starter/.gradle
+starter/local.properties
+starter/.idea*
+starter/.DS_Store
+starter/build
+starter/captures
+starter/.externalNativeBuild
+starter/.cxx
