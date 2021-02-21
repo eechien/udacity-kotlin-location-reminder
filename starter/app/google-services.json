@@ -41,6 +41,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441228919095:android:ee09bd9a043776fa1b5ab2",
+        "android_client_info": {
+          "package_name": "com.udacity.project4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441228919095-veh2vn1ppf7ikmd2ien3u13nl1kat2kk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.udacity.project4",
+            "certificate_hash": "9dd05b73b007db51ed8c2037cadacbf18fabad31"
+          }
+        },
+        {
+          "client_id": "441228919095-fd1i88a1i3ifatqdrjf6lghe13ub6c3f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWSR6SXW2qBzdCK34Zd9yO7DRQ42kHGz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441228919095-fd1i88a1i3ifatqdrjf6lghe13ub6c3f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
