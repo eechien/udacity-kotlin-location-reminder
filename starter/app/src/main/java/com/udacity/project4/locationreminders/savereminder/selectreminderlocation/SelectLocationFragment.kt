@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
@@ -28,6 +29,8 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
     private lateinit var map: GoogleMap
     private lateinit var locationProviderClient: FusedLocationProviderClient
 
+    private var marker: Marker? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -42,15 +45,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         setHasOptionsMenu(true)
         setDisplayHomeAsUpEnabled(true)
 
-//        TODO: add the map setup implementation
-//        TODO: zoom to the user location after taking his permission
-//        TODO: add style to the map
-//        TODO: put a marker to location that the user selected
-
-
-//        TODO: call this function after the user confirms on the selected location
-        onLocationSelected()
-
+        setSaveHandler()
         return binding.root
     }
 
@@ -62,10 +57,42 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         mapView.getMapAsync(this)
     }
 
-    private fun onLocationSelected() {
-        //        TODO: When the user confirms on the selected location,
-        //         send back the selected location details to the view model
-        //         and navigate back to the previous fragment to save the reminder and add the geofence
+    private fun setPoiClick() {
+        map.setOnPoiClickListener { poi ->
+            marker?.remove()
+            marker = map.addMarker(
+                MarkerOptions()
+                    .position(poi.latLng)
+                    .title(poi.name)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
+            )
+            _viewModel.selectedPOI.value = poi
+            _viewModel.reminderSelectedLocationStr.value = poi.name
+            _viewModel.latitude.value = poi.latLng.latitude
+            _viewModel.longitude.value = poi.latLng.longitude
+        }
+    }
+
+    private fun setMapLongClick() {
+        map.setOnMapLongClickListener { latLng ->
+            marker?.remove()
+            marker = map.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
+            )
+            _viewModel.selectedPOI.value = null
+            _viewModel.reminderSelectedLocationStr.value =
+                "%.5f, %.5f".format(latLng.latitude, latLng.longitude)
+            _viewModel.latitude.value = latLng.latitude
+            _viewModel.longitude.value = latLng.longitude
+        }
+    }
+
+    private fun setSaveHandler() {
+        binding.saveButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
 
@@ -95,7 +122,10 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+        // TODO: add style to the map
         showMyLocation()
+        setPoiClick()
+        setMapLongClick()
     }
 
     private fun isPermissionGranted() : Boolean {
