@@ -66,7 +66,6 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
                     .title(poi.name)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
             )
-            _viewModel.selectedPOI.value = poi
             _viewModel.reminderSelectedLocationStr.value = poi.name
             _viewModel.latitude.value = poi.latLng.latitude
             _viewModel.longitude.value = poi.latLng.longitude
@@ -81,7 +80,6 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
                     .position(latLng)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
             )
-            _viewModel.selectedPOI.value = null
             _viewModel.reminderSelectedLocationStr.value =
                 "%.5f, %.5f".format(latLng.latitude, latLng.longitude)
             _viewModel.latitude.value = latLng.latitude
