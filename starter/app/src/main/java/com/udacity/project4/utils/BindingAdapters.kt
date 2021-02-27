@@ -50,6 +50,6 @@ object BindingAdapters {
     @BindingAdapter("app:reminderLocation")
     @JvmStatic
     fun setReminderLocation(view: TextView, reminderDataItem: ReminderDataItem) {
-        view.text = "%f, %f".format(reminderDataItem.latitude, reminderDataItem.longitude)
+        view.text = "${reminderDataItem.latitude}, ${reminderDataItem.longitude}"
     }
 }
