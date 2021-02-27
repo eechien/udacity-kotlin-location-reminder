@@ -68,4 +68,5 @@ ext {
     firebaseVersion = '5.0.0'
     gsonVersion = '2.8.6'
     multidexVersion = '1.0.3'
+    uiAutomatorVersion = '2.2.0'
 }

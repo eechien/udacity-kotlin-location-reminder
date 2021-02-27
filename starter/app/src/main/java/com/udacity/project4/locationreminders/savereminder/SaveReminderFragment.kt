@@ -1,17 +1,12 @@
 package com.udacity.project4.locationreminders.savereminder
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.location.*
 import com.udacity.project4.R
@@ -74,7 +69,10 @@ class SaveReminderFragment : BaseFragment() {
             val reminder = ReminderDataItem(
                 title, description, location, latitude, longitude
             )
-            saveGeofence(reminder)
+            if (_viewModel.validateEnteredData(reminder)) {
+                _viewModel.saveReminder(reminder)
+                saveGeofence(reminder)
+            }
         }
     }
 
@@ -103,15 +101,7 @@ class SaveReminderFragment : BaseFragment() {
             .build()
 
         if (foregroundAndBackgroundLocationPermissionApproved(requireContext())) {
-            geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent).run {
-                addOnSuccessListener {
-                    Log.d(TAG, getString(R.string.geofence_added))
-                    _viewModel.validateAndSaveReminder(reminder)
-                }
-                addOnFailureListener {
-                    Log.d(TAG, getString(R.string.geofences_not_added))
-                }
-            }
+            geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent)
         }
     }
 
