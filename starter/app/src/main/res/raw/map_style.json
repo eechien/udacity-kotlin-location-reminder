@@ -1,0 +1,11 @@
+[
+  {
+    "featureType": "poi",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "saturation": 100
+      }
+    ]
+  }
+]
